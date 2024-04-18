@@ -1,0 +1,19 @@
+{
+  "name": "web-app-gas-crud",
+  "version": "1.0.0",
+  "description": "A web app in Google Sheets with CRUD functionality. Tutorial from \"Learn Google Sheets and Excel Spreadsheets\" on Youtube",
+  "main": "dialog.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "format": "prettier --log-level warn --write \"**/*.{js,html}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/celiackelly/web-app-google-sheets-crud"
+  },
+  "author": "Celia Kelly, Learn Google Sheets and Excel Spreadsheets channel",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}

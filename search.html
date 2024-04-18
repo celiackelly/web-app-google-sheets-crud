@@ -2,7 +2,12 @@
 
 <form class="mb-3">
   <label for="searchInput" class="form-label screen-reader-only">Search</label>
-  <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+  <input
+    type="text"
+    class="form-control"
+    id="searchInput"
+    placeholder="Search..."
+  />
 </form>
 
 <table class="table table-hover">
@@ -15,46 +20,28 @@
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody id="searchResults">
-    
-  </tbody>
+  <tbody id="searchResults"></tbody>
 </table>
 
 <template id="rowTemplate">
   <tr class="result-box">
-      <th class="customerId" scope="row"></th>
-      <td class="firstName"></td>
-      <td class="lastName"></td>
-      <td><button type="button" class="btn btn-outline-dark">Edit</button></td>
-      <td>
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-danger delete-button d-none">Confirm</button>
-          <button type="button" class="btn btn-outline-dark before-delete-button rounded" data-button-state="delete">Delete</button>
-        </div>
-      </td>
-    </tr>
+    <th class="customerId" scope="row"></th>
+    <td class="firstName"></td>
+    <td class="lastName"></td>
+    <td><button type="button" class="btn btn-outline-dark">Edit</button></td>
+    <td>
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-danger delete-button d-none">
+          Confirm
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-dark before-delete-button rounded"
+          data-button-state="delete"
+        >
+          Delete
+        </button>
+      </div>
+    </td>
+  </tr>
 </template>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

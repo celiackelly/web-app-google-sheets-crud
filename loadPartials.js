@@ -8,14 +8,13 @@ function loadPartialHTML_(partial) {
 // }
 
 function loadSearchView() {
-  return loadPartialHTML_("search")
+  return loadPartialHTML_('search')
 }
 
 function loadAddCustomerView() {
-  return loadPartialHTML_("addCustomer")
+  return loadPartialHTML_('addCustomer')
 }
 
 function loadEditCustomerView() {
-  return loadPartialHTML_("editCustomer")
+  return loadPartialHTML_('editCustomer')
 }
-
