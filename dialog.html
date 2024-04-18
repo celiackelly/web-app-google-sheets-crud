@@ -113,9 +113,11 @@
           let firstNameColumn = tr.querySelector('.firstName')
           let lastNameColumn = tr.querySelector('.lastName')
           let deleteButton = tr.querySelector('.delete-button')
+          let editButton = tr.querySelector('.edit-button')
 
           customerIdColumn.textContent = record[0]
           deleteButton.dataset.customerId = record[0] //add data attribute, to target row later
+          editButton.dataset.customerId = record[0]
           firstNameColumn.textContent = record[1]
           lastNameColumn.textContent = record[2]
 
@@ -147,6 +149,34 @@
             data.splice(index, 1)
           })
           .deleteById(customerId)
+      }
+
+      function afterEditViewLoads(params) {
+        document.getElementById('customer-id').value = params.customerId
+        google.script.run
+          .withSuccessHandler(customerInfo => {
+            document.getElementById('first-name').value = customerInfo.firstName
+            document.getElementById('last-name').value = customerInfo.lastName
+            document.getElementById('phone-number').value = customerInfo.phone
+          })
+          .getCustomerById(params.customerId)
+      }
+
+      function editCustomer() {
+          let customerInfo = {}  
+          customerInfo.firstName = document.getElementById('first-name').value 
+          customerInfo.lastName = document.getElementById('last-name').value 
+          customerInfo.phone = document.getElementById('phone-number').value
+
+          const id = document.getElementById('customer-id').value
+
+        google.script.run.withSuccessHandler(result => {
+          document.getElementById('save-success-message').classList.remove('invisible')
+          setTimeout(() => {
+            document.getElementById('save-success-message').classList.add('invisible')
+          }, 2000)
+        }).editCustomerbyId(id, customerInfo)
+
       }
 
       function loadSearchView() {
@@ -183,6 +213,20 @@
         }
         if (e.target.matches('.before-delete-button')) {
           displayConfirmationDelete(e)
+        }
+        if (e.target.matches('.edit-button')) {
+          const customerId = e.target.dataset.customerId
+          loadView({
+            function: 'loadEditCustomerView',
+            callback: afterEditViewLoads,
+            params: { customerId: customerId },
+          })
+        }
+        if (e.target.matches('#save-changes')) {
+          editCustomer()
+        }
+        if (e.target.matches('#cancel-changes')) {
+
         }
       }
 

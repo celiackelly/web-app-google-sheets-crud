@@ -3,7 +3,7 @@
 <form class="edit-customer-form">
   <div class="mb-3">
     <label for="customer-id" class="form-label">Customer ID</label>
-    <input type="text" class="form-control" id="customer-id" />
+    <input type="text" class="form-control" id="customer-id" readonly />
   </div>
   <div class="mb-3">
     <label for="first-name" class="form-label">First Name</label>
@@ -18,6 +18,11 @@
     <input type="tel" class="form-control" id="phone-number" />
   </div>
 
-  <button type="submit" class="btn btn-primary">Save</button>
-  <button type="submit" class="btn btn-danger">Cancel Changes</button>
+  <button type="submit" class="btn btn-primary" id="save-changes">Save</button>
+  <button type="submit" class="btn btn-danger" id="cancel-changes">Cancel Changes</button>
 </form>
+
+<!--invisible versus d-none Bootstrap classes - invisible preserves the white space where that element would have been-->
+<div class="alert alert-success invisible" id="save-success-message" role="alert">
+  Changes saved!
+</div>
