@@ -26,14 +26,9 @@
   <body>
     <main class="container">
       <nav>
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs main-nav">
           <li class="nav-item">
-            <span class="nav-link active" id="home-link" aria-current="page"
-              >Home</span
-            >
-          </li>
-          <li class="nav-item">
-            <span class="nav-link" id="search-link">Search</span>
+            <span class="nav-link active" id="search-link">Search</span>
           </li>
           <li class="nav-item">
             <span class="nav-link" id="add-customer-link">Add Customer</span>
@@ -41,7 +36,6 @@
         </ul>
       </nav>
       <div id="app">
-        <h1>Welcome!</h1>
       </div>
     </main>
 
@@ -163,20 +157,53 @@
       }
 
       function editCustomer() {
-          let customerInfo = {}  
-          customerInfo.firstName = document.getElementById('first-name').value 
-          customerInfo.lastName = document.getElementById('last-name').value 
-          customerInfo.phone = document.getElementById('phone-number').value
+        let customerInfo = {}
+        customerInfo.firstName = document.getElementById('first-name').value
+        customerInfo.lastName = document.getElementById('last-name').value
+        customerInfo.phone = document.getElementById('phone-number').value
 
-          const id = document.getElementById('customer-id').value
+        const id = document.getElementById('customer-id').value
 
-        google.script.run.withSuccessHandler(result => {
-          document.getElementById('save-success-message').classList.remove('invisible')
-          setTimeout(() => {
-            document.getElementById('save-success-message').classList.add('invisible')
-          }, 2000)
-        }).editCustomerbyId(id, customerInfo)
+        google.script.run
+          .withSuccessHandler(result => {
+            document
+              .getElementById('save-success-message')
+              .classList.remove('invisible')
+            setTimeout(() => {
+              document
+                .getElementById('save-success-message')
+                .classList.add('invisible')
+            }, 2000)
+          })
+          .editCustomerbyId(id, customerInfo)
+      }
 
+      function addCustomer() {
+        let customerInfo = {}
+        customerInfo.firstName = document.getElementById('first-name').value
+        customerInfo.lastName = document.getElementById('last-name').value
+        customerInfo.phone = document.getElementById('phone-number').value
+
+        google.script.run
+          .withSuccessHandler(() => {
+            customerInfo.firstName = document.getElementById(
+              'first-name',
+            ).value = ''
+            customerInfo.lastName = document.getElementById('last-name').value =
+              ''
+            customerInfo.phone = document.getElementById('phone-number').value =
+              ''
+
+            document
+              .getElementById('save-success-message')
+              .classList.remove('invisible')
+            setTimeout(() => {
+              document
+                .getElementById('save-success-message')
+                .classList.add('invisible')
+            }, 2000)
+          })
+          .addCustomer(customerInfo)
       }
 
       function loadSearchView() {
@@ -187,20 +214,29 @@
         loadView({ function: 'loadAddCustomerView' })
       }
 
-      function loadEditCustomerView() {
-        loadView({ function: 'loadEditCustomerView' })
+      function loadEditCustomerView(e) {
+        const customerId = e.target.dataset.customerId
+          loadView({
+            function: 'loadEditCustomerView',
+            callback: afterEditViewLoads,
+            params: { customerId: customerId },
+          })
+      }
+
+      function activeTabChange(e) {
+        let navLinks = document.querySelectorAll('.nav-link')
+        navLinks.forEach(link => link.classList.remove('active'))
+        e.target.classList.add('active')
       }
 
       document
         .getElementById('search-link')
         .addEventListener('click', loadSearchView)
+
       document
         .getElementById('add-customer-link')
         .addEventListener('click', loadAddCustomerView)
-      document
-        .getElementById('home-link')
-        .addEventListener('click', loadEditCustomerView)
-
+      
       function inputEventHandler(e) {
         if (e.target.matches('#searchInput')) {
           search()
@@ -215,18 +251,22 @@
           displayConfirmationDelete(e)
         }
         if (e.target.matches('.edit-button')) {
-          const customerId = e.target.dataset.customerId
-          loadView({
-            function: 'loadEditCustomerView',
-            callback: afterEditViewLoads,
-            params: { customerId: customerId },
-          })
+          loadEditCustomerView(e)
         }
         if (e.target.matches('#save-changes')) {
           editCustomer()
         }
         if (e.target.matches('#cancel-changes')) {
-
+          loadSearchView()
+        }
+        if (e.target.matches('#add-customer-button')) {
+          addCustomer()
+        }
+      }
+    
+      function navClickHandler(e) {
+        if (e.target.matches('.nav-link')) {
+          activeTabChange(e)
         }
       }
 
@@ -236,6 +276,11 @@
       document
         .getElementById('app')
         .addEventListener('click', clickEventHandler)
+      document
+        .querySelector('nav')
+        .addEventListener('click', navClickHandler)
+      document
+      .addEventListener('DOMContentLoaded', loadSearchView())
     </script>
   </body>
 </html>

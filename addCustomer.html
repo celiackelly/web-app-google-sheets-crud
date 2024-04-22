@@ -14,5 +14,14 @@
     <input type="tel" class="form-control" id="phone-number" />
   </div>
 
-  <button type="submit" class="btn btn-primary">Add Customer</button>
+  <button class="btn btn-primary" id="add-customer-button">Add Customer</button>
 </form>
+
+<!--invisible versus d-none Bootstrap classes - invisible preserves the white space where that element would have been-->
+<div
+  class="alert alert-success invisible"
+  id="save-success-message"
+  role="alert"
+>
+  New customer added!
+</div>
